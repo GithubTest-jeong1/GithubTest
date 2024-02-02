@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko" 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div layout:fragment="content" class="content content2">
+<h1>상품 데이터 출력</h1>
+	<table border="1">
+		<thead>
+			<tr>
+				<td>순번</td>
+				<td></td>
+				<td>상품명</td>
+				<td>상품설명</td>
+				<td>상품 가격</td>
+				<td>상품 등록 날짜</td>
+			</tr>
+		</thead>
+		<tbody>
+			<!-------------switch------------->
+			<tr th:each="itemDto,status:${itemDtoList}">
+				<td th:text="${status.index}+1"></td>
+				<td th:switch="${status.even}">
+					<span th:case="true">인기</span>
+					<span th:false="true">신상</span>
+				</td>
+				<td th:text="${itemDto.itemNm}"></td>
+				<td th:text="${itemDto.itemDetail}"></td>
+				<td th:text="${itemDto.price}"></td>
+				<td th:text="${itemDto.regTime}"></td>
+			</tr>
+			<!-------------if------------->
+			<tr th:each="itemDto,status:${itemDtoList}">
+				<td th:text="${status.index}+1"></td>
+				<td th:if="${status.even}" th:text="인기제품"></td>
+				<td th:if="${status.odd}" th:text="핫제품"></td>
+				<td th:text="${itemDto.itemNm}"></td>
+				<td th:text="${itemDto.itemDetail}"></td>
+				<td th:text="${itemDto.price}"></td>
+				<td th:text="${itemDto.regTime}"></td>
+			</tr>
+		</tbody>
+	</table>
+	<h1>th:href 문법</h1>
+	<a th:href="@{board}">게시판 이동</a>
+	<a th:href="@{http://thymeleaf.org}">타임머신 이동</a>
+	<br />
+	<br />
+	<br />
+	<!--로그인 페이지로 파라미터 전달-->
+	<a th:href="@{login(param1='매개변수1',param2='매개변수2')}">로그인 페이지</a>
+	
+</div>
+</body>
+</html>
